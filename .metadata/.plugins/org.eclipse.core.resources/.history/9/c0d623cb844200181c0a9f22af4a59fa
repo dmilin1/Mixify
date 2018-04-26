@@ -1,0 +1,73 @@
+import com.wrapper.spotify.SpotifyApi;
+import com.wrapper.spotify.SpotifyHttpManager;
+import com.wrapper.spotify.exceptions.SpotifyWebApiException;
+import com.wrapper.spotify.model_objects.credentials.AuthorizationCodeCredentials;
+import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeRequest;
+
+import java.io.IOException;
+import java.net.URI;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+
+public class AuthorizationCodeExample {
+  private static final String clientId = "abeef9600bad45989e961fcaa940fce4";
+  private static final String clientSecret = "43c5fefb4d704fc3a4afeb6bae77355a";
+  private static final URI redirectUri = SpotifyHttpManager.makeUri("https://open.spotify.com");
+  private static final String code = "AQDAYXHSoDwdHpzdmETbtcpNZfavT0QX55JZQP4InOOUI4c2LUMbY1AsJYR4TD3kl_SywPyn4pGskt8r-4RLPWqsLoj8qC6XVT6BhWnDLvPPrZS7e5Yn3a9rHAOXo4Ns7MRYlwnMqW1xGG2Uvm9R8Tk_Z-qyZ-8j0RaPPgX9GR57k60bsuuW6mVB7Pz5f5jh0iM5mpFVErJQhMCQ1N_HudwjVA9PjjlcnMq7rDiZfxPZPW5P";
+
+  private static final SpotifyApi spotifyApi = new SpotifyApi.Builder()
+          .setClientId(clientId)
+          .setClientSecret(clientSecret)
+          .setRedirectUri(redirectUri)
+          .build();
+  private static final AuthorizationCodeRequest authorizationCodeRequest = spotifyApi.authorizationCode(code)
+          .build();
+
+  public static void authorizationCode_Sync() {
+    try {
+      final AuthorizationCodeCredentials authorizationCodeCredentials = authorizationCodeRequest.execute();
+
+      // Set access and refresh token for further "spotifyApi" object usage
+      spotifyApi.setAccessToken(authorizationCodeCredentials.getAccessToken());
+      spotifyApi.setRefreshToken(authorizationCodeCredentials.getRefreshToken());
+
+      System.out.println("Expires in: " + authorizationCodeCredentials.getExpiresIn());
+    } catch (IOException | SpotifyWebApiException e) {
+      System.out.println("Error: " + e.getMessage());
+    }
+  }
+
+  public static void authorizationCode_Async() {
+    try {
+      final Future<AuthorizationCodeCredentials> authorizationCodeCredentialsFuture = authorizationCodeRequest.executeAsync();
+
+      // ...
+
+      final AuthorizationCodeCredentials authorizationCodeCredentials = authorizationCodeCredentialsFuture.get();
+
+      // Set access and refresh token for further "spotifyApi" object usage
+      spotifyApi.setAccessToken(authorizationCodeCredentials.getAccessToken());
+      spotifyApi.setRefreshToken(authorizationCodeCredentials.getRefreshToken());
+
+      System.out.println("Expires in: " + authorizationCodeCredentials.getExpiresIn());
+    } catch (InterruptedException | ExecutionException e) {
+      System.out.println("Error: " + e.getCause().getMessage());
+    }
+  }
+  
+  public static void startResumeUsersPlayback_Sync() {
+	    try {
+	      final String string = startResumeUsersPlaybackRequest.execute();
+
+	      System.out.println("Null: " + string);
+	    } catch (IOException | SpotifyWebApiException e) {
+	      System.out.println("Error: " + e.getMessage());
+	    }
+	  }
+  
+  public static void main(String[] args) {
+	AuthorizationCodeExample derp = new AuthorizationCodeExample();
+	derp.authorizationCode_Sync();
+}
+  
+}

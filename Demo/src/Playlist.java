@@ -34,9 +34,9 @@ public class Playlist {
 	
 	@Override
 	public String toString() {
-		String output = "Song		Artist		Length\n";
+		String output = "Song				Artist				Length\n";
 		for (Song checkSong : thePlaylist) {
-			output = output + checkSong.name + "\t\t" + checkSong.artist + "\t\t" + checkSong.length + "\n";
+			output = output + checkSong.name + "\t\t" + checkSong.artist + "\t\t\t" + checkSong.length + "\n";
 		}
 		return output;
 	}

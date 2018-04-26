@@ -1,0 +1,1024 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Mixify</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700">
+    <style type="text/css">
+      #login, #loggedin {
+        display: none;
+      }
+      .text-overflow {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 500px;
+      }
+      
+      ::-webkit-scrollbar {
+    width: 8px;
+}
+
+html,body,h1,h2,h3,h4,h5,h6 {
+    font-family: 'Montserrat', cursive, sans-serif;
+    -webkit-user-select: none; /* Safari */        
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* IE10+/Edge */
+	user-select: none; /* Standard */
+    }
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 0px grey; 
+    border-radius: 8px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgb(83,83,83); 
+    border-radius: 8px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(160,160,160); 
+}
+      
+    .mixify {
+    font-size: 600%;
+    width: 100%;
+    text-align: center;
+    color: rgb(47,213,102);
+    }
+      
+    .shifted {
+    text-align: center;
+    width:42%;
+    float: left;
+    margin:20px;
+    justify-content: center
+    }
+    
+    .users {
+    width: 80%;
+    height: 100px;
+    background: #191414;
+    margin:auto;
+    padding: 0px;
+    padding-top: 0px;
+    }
+    
+    .saveName {
+    width:42%;
+    margin:0px;
+    text-align: center;
+    background:rgb(40,40,40);
+    color:rgb(179,179,179);
+    }
+    
+    .userLeft {
+    float: left;
+    width:42%;
+    margin:0px;
+    text-align: center;
+    background:rgb(40,40,40);
+    color:rgb(179,179,179);
+    }
+    
+    .userRight {
+    float: right;
+    width:42%;
+    margin:0px;
+    text-align: center;
+    background:rgb(40,40,40);
+    color:rgb(179,179,179);
+    }
+    
+    .text {
+    width: 80%;
+    height: 10px;
+    background: #191414;
+    margin:auto;
+    padding: 0px;
+    text-align: center;
+    font-size:150%;
+    }
+    
+    .textLeft {
+    width:40%;
+    margin:0px;
+    float: left;
+    }
+    
+    .textRight {
+    width:40%;
+    margin:0px;
+    float: right;
+    }
+    
+    .center {
+    text-align: center;
+    }
+    
+    .selects {
+    width: 70%;
+    height: 200px;
+    background: #191414;
+    margin:auto;
+    padding: 0px;
+    }
+    
+    .menuLeft {
+    float: left;
+    width: 60%;
+    margin-right:-1000px;
+    max-width: 40%;
+    }
+    
+    .menuRight {
+    float: right;
+    width: 60%;
+    max-width: 40%;
+    }
+    
+    .scroll {
+    border:2px solid #ccc;
+    height: 350px;
+    overflow-y: auto;
+    }
+    
+    .lightText {
+    color: rgb(246,246,246);
+    }
+    
+    .darkText {
+    color: rgb(179,179,179);
+    }
+    
+    .greenText {
+    color: rgb(47,213,102);
+    }
+    
+    .error {
+    color: rgb(255,100,100);
+    text-align:center;
+    }
+    
+    .listText {
+    color: rgb(246,246,246);
+  	cursor: pointer;
+  	width: -webkit-calc(100% - 50px);
+  	text-align:center;
+  	vertical-align: middle;
+	line-height: 15px;
+    margin-top:-5px;
+    padding:15px;
+    }
+    
+    .songListText {
+    color: rgb(246,246,246);
+  	cursor: pointer;
+  	width: -webkit-calc(33.3% - 17px);
+  	text-align: left;
+  	vertical-align: middle;
+	line-height: 15px;
+    margin-top:-5px;
+    padding:15px;
+    }
+    
+    .hoverSelect:hover {
+     background: rgb(40,40,40)
+    }
+    
+    .button {
+    -webkit-border-radius: 100px;
+  	-moz-border-radius: 100px;
+ 	border-radius: 100px;
+    background-color:rgb(24,24,24);
+    border:1px solid rgb(179,179,179);
+    color: rgb(179,179,179);
+    font-weight: bold;
+    padding: 10px 32px;
+    transition: transform .1s ease-in-out;
+    outline:0;
+    }
+    
+    .button:hover {
+    -webkit-border-radius: 100px;
+  	-moz-border-radius: 100px;
+ 	border-radius: 100px;
+    background-color:rgb(24,24,24);
+    border:1px solid rgb(246,246,246);
+    color: rgb(179,179,179);
+    font-weight: bold;
+    padding: 10px 32px;
+    text-decoration:none;
+    transform: scale(1.05);
+	}
+	
+	.button:focus {
+    -webkit-border-radius: 100px;
+  	-moz-border-radius: 100px;
+ 	border-radius: 100px;
+    background-color:rgb(24,24,24);
+    border:1px solid rgb(120,120,120);
+    color: rgb(130,130,130);
+    font-weight: bold;
+    padding: 10px 32px;
+    text-decoration:none;
+    transform: scale(1);
+	}
+	
+	
+	
+	
+    .mixButton {
+    position: relative;
+	bottom: 20px;
+    -webkit-border-radius: 100px;
+  	-moz-border-radius: 100px;
+ 	border-radius: 100px;
+    background-color:rgb(42,184,88);
+    border:0px solid rgb(0,0,0);
+    color: rgb(255,255,255);
+    font-weight: bold;
+    font-size: 120%;
+    padding: 8px 30px;
+    transition: all .1s ease-in-out;
+    outline:0;
+    }
+    
+    .mixButton:hover {
+    transform: scale(1.05);
+    background-color:rgb(47,213,102);
+	}
+	
+	.mixButton:focus {
+    background-color: rgb(29,130,62);
+    transform: scale(1);
+	}
+    
+    
+    
+input[type=checkbox] {
+  transform: scale(1.5);
+}
+
+
+  input[type=checkbox] {
+  width: 30px;
+  height: 30px;
+  margin-right: 0spx;
+  cursor: pointer;
+  font-size: 17px;
+  visibility: hidden;
+}
+
+
+input[type=checkbox]:after {
+    content: " ";
+    background-color: rgb(24,24,24,0);
+    display: inline-block;
+    margin-left:0px;
+    margin-top:5px;
+    padding-bottom:0px;
+    color:rgb(179,179,179);
+    width:18vw;
+    height:90%;
+    visibility: visible;
+    border:0px solid #00BFF0;
+    padding-right:0px;
+    border-radius:0px;
+}
+input[type=checkbox]:checked:after {
+    content: "\2713";
+    padding-top:0px;
+    padding-left:10px;
+    font-weight:bold;
+}
+   
+input[type=checkbox] + label, input[type=checkbox] + label + label, input[type=checkbox] + label + label + label{
+  color: rgb(179,179,179);
+}
+
+input[type=checkbox]:checked + label, input[type=checkbox]:checked + label + label, input[type=checkbox]:checked + label + label + label{
+  color: rgb(246,246,246);
+} 
+
+.space { margin-top: 200px; }
+    
+}
+
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+.lds-ring div {
+	top: 612px;
+  box-sizing: border-box;
+  display: inline-block;
+  position: absolute;
+  width: 51px;
+  height: 51px;
+  margin: 6px;
+  border: 6px solid #fff;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #fff transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+    </style>
+  </head>
+  
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-8909561335027437",
+    enable_page_level_ads: true
+  });
+</script>
+
+  <body style="background-color:#191414">
+    <div>
+        <div class="mixify">
+        <script>
+        	function home() {
+        		location.href = window.location.href.split(/&|#/)[0];
+        	}
+        </script>
+        <strong onclick='home()' style="cursor: pointer;">MIXIFY</strong>
+        </div>
+      <div class="center" id="login">
+      <div class="lightText">
+      <br>
+        Spotify playlist mixer
+        <br>
+        <br>
+        </div>
+        <a href="/login?derp=4" class="button" id="loginButton">Log in with Spotify</a>
+      </div>
+      <div id="loggedin">
+        <div id="oauth">
+        </div>
+        <div id="divUsers" style="display: block;">
+			<p class="lightText" style="text-align:center">
+			For Facebook or Google+ accounts:
+			<br>
+			Right Click User => Share => Copy Spotify URI
+			</p>
+			<div style="text-align: center;">
+			<a class="lightText" href="https://www.spotify.com/us/account/overview/" rel="external">Or look up your username here</a>
+			</div>
+			<br>
+			<section class="text">
+				<p class="textLeft lightText">User 1:</p>
+				<p class="textRight lightText">User 2:</p>
+			</section>
+			<section class="users">
+				<input class="userLeft" type="text" name="username1" id="user1" value="me" />
+				<input class="userRight" type="text" name="username2" id="user2" value="someone else" />
+			</section>
+			<div class="center">
+			<button class="button" id="get-playlists">GET PLAYLISTS</button>
+			</div>
+			<div class="error" id="error" style="display: none;">
+			Could not load users.
+			</div>
+        </div>
+    <div id="divPlaylists" style="display: none;">
+        <div class="center">
+        <br>
+        <h2 class="lightText">Playlists</h2>
+        <legend></legend>
+        </div>
+        <section class="selects">
+        <div class="menuLeft" id="playlists">
+        </div>
+        <div class="menuRight" id="playlists2">
+        </div>
+        </section>
+        <br>
+		<div class="space"></div>
+		<div style="margin: 0 auto; width: 64px;">
+		<div class="lds-ring" style="display: none;" id="loading"><div></div><div></div><div></div><div></div></div>
+		</div>
+		<div style="text-align:center">
+		<button class="mixButton" id="mix">Mixify</button>
+		<div style="padding:10px"></div>
+		<button class="button" style="position: relative; bottom: 20px;" id="backPlaylists">Back</button>
+		</div>
+    </div>
+    <div id="divMix" style="display: block; position: relative; bottom: 20px;">
+		<div id="mixedSongs" style="width:80%; text-align:center; margin: auto;">
+<!--         <button class="btn btn-default" id="obtain-new-token">Obtain new token using the refresh token</button> -->
+      </div>
+    </div>
+    <div id="divSave" style="display: none; text-align: center;">
+    <button class="button" style="position: relative; bottom: 0px;" id="backMix">Back</button>&nbsp;&nbsp;<button class="button" style="position: relative; bottom: 0px;" id="saveMix">Save</button>
+	</div>
+	
+    <script id="mixedSongs-template" type="text/x-mixedSongs-template">
+    <br></br>
+	<fieldset id="user1playlists">
+      <div class="lightText" style="display:inline-block; margin-right:10px; position: relative; right: 30%;">Songs</div>
+      <div class="lightText" style="display:inline-block; margin-right:10px; position: relative;">Artists</div>
+      <div class="lightText" style="display:inline-block; margin-right:10px; position: relative; left: 30%;">Albums</div>
+      <br>
+      <dl class="dl-horizontal">
+      	<div class="scroll" style="background: rgb(24,24,24)">
+      	{{#each this}}
+		  <div class="hoverSelect">
+			<input type="checkbox" id="{{id}}" name="user1" value="{{id}}" checked>
+			<label class="songListText" for="{{id}}">{{name}}</label><label class="songListText" for="{{id}}">{{#each artists}}{{name}}{{#next}}, {{/next}}{{/each}}</label><label class="songListText" for="{{id}}">{{album.name}}</label>
+			<span></span>
+		  </div>
+		  <legend style="margin-bottom: 0px;"></legend>
+        {{/each}}
+    	</div>
+		</dl>
+    </fieldset>
+    <br></br>
+    <p class="lightText">Name Playlist:</p>
+    <input class="saveName" type="text" name="saveName" id="saveName" value="MyMixify" />
+    </script>
+
+
+
+    <script id="oauth-template" type="text/x-handlebars-template">
+      <h2>oAuth info</h2>
+      <dl class="dl-horizontal">
+        <dt>Access token</dt><dd class="text-overflow">{{access_token}}</dd>
+        <dt>Refresh token</dt><dd class="text-overflow">{{refresh_token}}</dd>
+      </dl>
+    </script>
+    
+        <script id="playlists-template" type="text/x-handlebars-template">
+<!-- 
+            <select class="menuLeft" id="user1playlists" name="contact" size="10" multiple>
+              {{#items}}
+                <option value="{{id}}" name="{{name}}" {{selected}}>{{name}}</option>
+              {{/items}}
+            </select>
+ -->
+ <fieldset id="user1playlists">
+  <div class="darkText" style="text-align: center; font-size: 150%">Choose your playlists</div>
+  <div class="scroll" style="background: rgb(24,24,24)">
+  {{#items}}
+  <div class="hoverSelect">
+	<input type="checkbox" id="{{id}}" name="user1" value="{{id}}" checked>
+	<label class="listText" for="{{id}}">{{name}}</label>
+	<span></span>
+  </div>
+  <legend style="margin-bottom: 0px;"></legend>
+  {{/items}}
+  </div>
+</fieldset>
+
+   		</script>
+   		<script id="playlists2-template" type="text/x-handlebars-template">
+<!-- 
+            <select class="menuRight" id="user2playlists" name="contact" size="10" multiple>
+              {{#items}}
+                <option value="{{id}}" name="{{name}}" {{selected}}>{{name}}</option>
+              {{/items}}
+            </select>
+ -->
+ <fieldset id="user2playlists">
+  <div class="darkText" style="text-align: center; font-size: 150%">Choose your playlists</div>
+  <div class="scroll" style="background: rgb(24,24,24)">
+  {{#items}}
+  <div class="hoverSelect">
+	<input type="checkbox" id="{{id}}" name="user2" value="{{id}}" checked>
+	<label class="listText" for="{{id}}">{{name}}</label>
+	<span></span>
+  </div>
+  <legend style="margin-bottom: 0px;"></legend>
+  {{/items}}
+  </div>
+</fieldset>
+        </script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script>
+      (function() {
+
+        /**
+         * Obtains parameters from the hash of the URL
+         * @return Object
+         */
+        function getHashParams() {
+          var hashParams = {};
+          var e, r = /([^&;=]+)=?([^&;]*)/g,
+              q = window.location.hash.substring(1);
+          while ( e = r.exec(q)) {
+             hashParams[e[1]] = decodeURIComponent(e[2]);
+          }
+          return hashParams;
+        }
+
+        var oauthSource = document.getElementById('oauth-template').innerHTML,
+            oauthTemplate = Handlebars.compile(oauthSource),
+            oauthPlaceholder = document.getElementById('oauth');
+            
+        var mixedSongsSource = document.getElementById('mixedSongs-template').innerHTML,
+            mixedSongsTemplate = Handlebars.compile(mixedSongsSource),
+            mixedSongsPlaceholder = document.getElementById('mixedSongs');
+
+        var playlist1Source = document.getElementById('playlists-template').innerHTML,
+            playlist1Template = Handlebars.compile(playlist1Source),
+            playlist1Placeholder = document.getElementById('playlists');
+            
+        var playlist2Source = document.getElementById('playlists2-template').innerHTML,
+            playlist2Template = Handlebars.compile(playlist2Source),
+            playlist2Placeholder = document.getElementById('playlists2');
+
+        var params = getHashParams();
+
+        var access_token = params.access_token,
+            refresh_token = params.refresh_token,
+            error = params.error;
+            
+        var id;
+
+        if (error) {
+          alert('There was an error during the authentication');
+        } else {
+          if (access_token) {
+            // render oauth info
+//             oauthPlaceholder.innerHTML = oauthTemplate({
+//               access_token: access_token,
+//               refresh_token: refresh_token
+//             });
+		$.ajax({
+                url: 'https://api.spotify.com/v1/me',
+                headers: {
+                  'Authorization': 'Bearer ' + access_token
+                },
+                success: function(response) {
+                  id = response.id;
+                  console.log(id);
+                }
+            });
+            
+          $('#login').hide();
+          $('#loggedin').show();
+            
+            
+          } else {
+              // render initial screen
+              $('#login').show();
+              $('#loggedin').hide();
+          }
+
+//           document.getElementById('obtain-new-token').addEventListener('click', function() {
+//             $.ajax({
+//               url: '/refresh_token',
+//               data: {
+//                 'refresh_token': refresh_token
+//               }
+//             }).done(function(data) {
+//               access_token = data.access_token;
+//               console.log(access_token);
+//               oauthPlaceholder.innerHTML = oauthTemplate({
+//                 access_token: access_token,
+//                 refresh_token: refresh_token
+//               });
+//             });
+//           }, false);
+
+
+
+		
+          
+
+
+
+	
+
+
+		var user1Playlists;
+		var user2Playlists;
+		
+		var user1Tracks = [];
+		var user2Tracks = [];
+		
+		var commonTracks = [];
+		var playlists1Finished = 0;
+		var playlists2Finished = 0;
+		
+		var accountsLoaded = 0
+		
+		
+		
+		document.getElementById('saveMix').addEventListener('click', function() {
+          	//demo.innerHTML = document.getElementById("user2").value;
+          	var playlistName = document.getElementById("saveName").value;
+          	var myJson = '{"name":"' + playlistName + '", "public":false}'
+          	
+          	var songList = '{"uris": ['
+          	for (var i = 0; i < commonTracks.length; i++) {
+          		songList = songList + '"spotify:track:'+ commonTracks[i].id + '"'
+          		if (i != commonTracks.length - 1) {
+          			songList = songList + ','
+          		}
+          	}
+          	songList = songList + ']}';
+          	
+          	
+          	console.log(songList);
+          	
+          	$.ajax({
+          		type: 'POST',
+                url: `https://api.spotify.com/v1/users/${id}/playlists/`,
+                dataType: 'json',
+                data: myJson,
+                headers: {
+                  'Authorization': 'Bearer ' + access_token
+                },
+                success: function(response) {
+                	
+					$.ajax({
+						type: 'POST',
+						url: `https://api.spotify.com/v1/users/${id}/playlists/${response.id}/tracks`,
+						dataType: 'json',
+						data: songList,
+						headers: {
+						  'Authorization': 'Bearer ' + access_token
+						},
+						success: function(result) {
+							console.log(response);
+							window.open(response.external_urls.spotify);
+							document.getElementById("divPlaylists").style.display= "none";
+         				  	document.getElementById("divUsers").style.display= "block";
+     				   		document.getElementById("mix").style.display= "none";
+        					document.getElementById("backPlaylists").style= "position: relative; bottom: 20px;";
+         				  	document.getElementById("divSave").style.display= "none";
+							document.getElementById("divMix").style.display= "none";
+							document.getElementById("loading").style.display= "none";
+                			accountsLoaded = 0;
+                			checkAccountsLoaded()
+						}
+					});
+                	
+                }
+            });
+          });
+          
+
+		document.getElementById('mix').addEventListener('click', function() {
+			document.getElementById("mix").style.display= "none";
+			document.getElementById("loading").style.display= "block";
+			document.getElementById("backPlaylists").style= "position: relative; bottom: -19px;";
+            
+			document.getElementById("divMix").style.display= "none";
+          	//demo.innerHTML = document.getElementById("user1playlists").value;
+          	var user1 = document.getElementById("user1").value;
+          	var user2 = document.getElementById("user2").value;
+          	
+          	for (var i = 0; i < user1Playlists.length; i++) {
+				getTracks(user1Playlists[i].owner.id,user1Playlists[i].id, function(results) {
+					for (var j = 0; j < results.items.length; j++) {
+						if (!user1Tracks.includes(results.items[j])) {
+							user1Tracks.push(results.items[j]);
+						}
+						if (j == results.items.length - 1) {
+							playlists1Finished += 1;
+						}
+					}
+				})
+
+			}
+			
+			
+			for (var i = 0; i < user2Playlists.length; i++) {
+				if (user2Playlists[i].id == "1MPN5LbRDidYUwi1XH8wal" || user2Playlists[i].id == "4JeQfmcQEmew6xGxTng5la") {
+					console.log(user2Playlists[i].name);
+				}
+				getTracks(user2Playlists[i].owner.id,user2Playlists[i].id, function(results) {
+					for (var j = 0; j < results.items.length; j++) {
+						if (!user2Tracks.includes(results.items[j])) {
+							user2Tracks.push(results.items[j]);
+						}
+						if (j == results.items.length - 1) {
+							playlists2Finished += 1;
+						}
+					}
+				})
+			}
+			
+			
+			//Find common tracks
+			
+
+			checkVariable();
+			function checkVariable() {
+			   if (playlists1Finished == user1Playlists.length && playlists2Finished == user2Playlists.length) {
+					console.log("YAY");
+					var i = 0;
+					var j = 0;
+					for (i = 0; i < user1Tracks.length; i++) {
+						for (j = 0; j < user2Tracks.length; j++) {
+							if (user1Tracks[i].track.id == user2Tracks[j].track.id && !commonTracks.includes(user1Tracks[i].track)) {
+								commonTracks.push(user1Tracks[i].track);
+							}
+						}
+					}
+					
+					checkFinished();
+					function checkFinished() {
+						if (i == user1Tracks.length && j == user2Tracks.length) {
+							
+							var x = 0;
+							var y = 0;
+							for (x = 0; x < commonTracks.length; x++) {
+								for (y = 0; y < commonTracks[x].artists.length; y++) {
+									if (commonTracks[x].artists[y+1] != null) {
+										commonTracks[x].artists[y].next = true;
+									}
+								}
+							}
+							
+							checkComplete();
+							function checkComplete() {
+								if (x == commonTracks.length && y == commonTracks[x-1].artists.length) {
+									mixedSongsPlaceholder.innerHTML = mixedSongsTemplate(commonTracks);
+									document.getElementById("divMix").style.display= "block";
+									document.getElementById("divSave").style.display= "block";
+								} else {
+								setTimeout(checkComplete,500);
+								}
+							}
+
+							
+							
+						} else {
+						setTimeout(checkFinished,500);
+						}
+					}
+					
+					document.getElementById("divPlaylists").style.display= "none";
+					console.log(commonTracks);
+					
+					
+			   } else {
+					setTimeout(checkVariable, 500);
+			   }
+			}
+			
+			
+            
+            
+          }, false);
+        
+        
+          
+        function getTracks(user, playlistID, callback) {
+    		$.ajax({
+                url: `https://api.spotify.com/v1/users/${user}/playlists/${playlistID}/tracks`,
+                headers: {
+                  'Authorization': 'Bearer ' + access_token
+                },
+                success: function(response) {
+                	
+                	if(response.next != null) {
+
+                		getTracksRecurse(response.next, function(results) {
+                			response.items = $.merge(response.items, results.items)
+                			callback(response);
+                		});
+                	} else {
+                	callback(response);
+                	}
+                }
+            });
+        }
+        
+        function getTracksRecurse(URL, callback) {
+        	$.ajax({
+                url: URL,
+                headers: {
+                  'Authorization': 'Bearer ' + access_token
+                },
+                success: function(response) {
+                	
+                	if(response.next != null) {
+
+                		getTracksRecurse(response.next, function(results) {
+                			response.items = $.merge(response.items, results.items)
+                			callback(response);
+                		});
+                	} else {
+                	callback(response);
+                	}
+                }
+            });
+        }
+        
+        function refreshToken() {
+            $.ajax({
+              url: '/refresh_token',
+              data: {
+                'refresh_token': refresh_token,
+              }
+            }).done(function(data) {
+              access_token = data.access_token;
+              oauthPlaceholder.innerHTML = oauthTemplate({
+                access_token: access_token,
+                refresh_token: refresh_token
+              });
+            });
+        }
+
+
+		document.getElementById('backPlaylists').addEventListener('click', function() {
+            document.getElementById("divPlaylists").style.display= "none";
+            document.getElementById("divUsers").style.display= "block";
+            document.getElementById("mix").style.display= "inline-block";
+            document.getElementById("loading").style.display= "none";
+            document.getElementById("backPlaylists").style= "position: relative; bottom: 20px;";
+            document.getElementById("divSave").style.display= "none";
+			document.getElementById("divMix").style.display= "none";
+            accountsLoaded = 0;
+            checkAccountsLoaded()
+          }, false);
+
+		
+		document.getElementById('backMix').addEventListener('click', function() {
+            document.getElementById("divPlaylists").style.display= "block";
+         	document.getElementById("divUsers").style.display= "none";
+       		document.getElementById("mix").style.display= "inline-block";
+        	document.getElementById("backPlaylists").style= "position: relative; bottom: 20px;";
+           	document.getElementById("divSave").style.display= "none";
+			document.getElementById("divMix").style.display= "none";
+			document.getElementById("loading").style.display= "none";
+          }, false);
+
+
+		
+		
+		checkAccountsLoaded();
+		function checkAccountsLoaded() {
+			if (accountsLoaded == 2) {
+				document.getElementById("divUsers").style.display= "none";
+				document.getElementById("divPlaylists").style.display= "block";
+				document.getElementById("divMix").style.display= "none";
+				document.getElementById("mix").style.display= "inline-block";
+				document.getElementById("divSave").style.display= "none";
+			} else {
+			setTimeout(checkAccountsLoaded,100);
+			}
+		}
+		
+          document.getElementById('get-playlists').addEventListener('click', function() {
+          	//demo.innerHTML = document.getElementById("user2").value;
+          	document.getElementById("error").style.display= "none";
+          	var user1 = document.getElementById("user1").value;
+          	if (user1 == "me") {user1 = id;}
+          	if (user1.includes("spotify:user:")) {user1 = user1.split(":")[2];}
+          	
+          	$.ajax({
+                url: `https://api.spotify.com/v1/users/${user1}/playlists/?limit=50`,
+                headers: {
+                  'Authorization': 'Bearer ' + access_token
+                },
+                success: function(response) {
+                if (response.next != null) {
+						$.ajax({
+						url: response.next,
+						headers: {
+						  'Authorization': 'Bearer ' + access_token
+						},
+						success: function(result) {
+							response.items = $.merge(response.items, result.items)
+                			playlist1Placeholder.innerHTML = playlist1Template(response);
+                			user1Playlists = response.items;
+                			accountsLoaded += 1;
+						}
+					});
+                } else {
+                playlist1Placeholder.innerHTML = playlist1Template(response);
+                user1Playlists = response.items;
+                accountsLoaded += 1;
+                }
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                	document.getElementById("error").style.display= "block";
+                	accountsLoaded=0;
+                }
+            });
+            
+          }, false);
+          
+          
+          document.getElementById('get-playlists').addEventListener('click', function() {
+          	//demo.innerHTML = document.getElementById("user2").value;
+          	document.getElementById("error").style.display= "none";
+          	var user2 = document.getElementById("user2").value;
+          	if (user2 == "me") {user2 = id;}
+          	if (user2.includes("spotify:user:")) {user2 = user2.split(":")[2];}
+          	
+          	$.ajax({
+                url: `https://api.spotify.com/v1/users/${user2}/playlists/?limit=50`,
+                headers: {
+                  'Authorization': 'Bearer ' + access_token
+                },
+                success: function(response) {
+                if (response.next != null) {
+						$.ajax({
+						url: response.next,
+						headers: {
+						  'Authorization': 'Bearer ' + access_token
+						},
+						success: function(result) {
+							response.items = $.merge(response.items, result.items)
+                			playlist2Placeholder.innerHTML = playlist2Template(response);
+                			user2Playlists = response.items;
+                			accountsLoaded += 1;
+						}
+					});
+                } else {
+                playlist2Placeholder.innerHTML = playlist2Template(response);
+                user2Playlists = response.items;
+                accountsLoaded += 1;
+                }
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                	document.getElementById("error").style.display= "block";
+                	accountsLoaded=0;
+                }
+            });
+          }, false);
+          
+        }
+      })();
+    </script>
+    <script>
+    
+    function recursePlaylists(URL, access_token) {
+    	console.log("URL: " + URL);
+    		$.ajax({
+                url: URL,
+                headers: {
+                  'Authorization': 'Bearer ' + access_token
+                },
+                success: function(response) {
+					if (response.next != null) {
+						for(var key in response){
+						  if(response.hasOwnProperty(key)){
+							response[key]=recursePlaylists(response.next, access_token)[key];
+						  }
+						}
+					}
+					console.log(response);
+					return response;
+                }
+            });
+    }
+    
+    
+    function getCheckBoxValues(checkboxName) {
+  	  var checkboxVals = [];
+  	  $('input:checkbox[name='+checkboxName+']:checked').each(function(index){
+        checkboxVals.push($(this).val());
+      })
+    return checkboxVals;
+	}
+	
+    
+    function myFunction() {
+    	//demo.innerHTML = "User1:\t" + getCheckBoxValues("user1") + "\nUser2:\t" + getCheckBoxValues("user2");
+    	console.log(getCheckBoxValues("user1"));
+    	//demo.innerHTML = document.getElementById('user1playlists').selectedOptions;
+    }
+    
+    document.getElementById("loginButton").setAttribute("href","/login?incoming=" + window.location.href.split('?')[0]);
+    
+    </script>
+<!-- 
+<p id="demo">A Paragraph</p>
+<button type="button" onclick="myFunction()">Try it</button>
+ -->
+
+  </body>
+</html>

@@ -8,11 +8,11 @@ public class Sorter {
 		Playlist playlist1 = new Playlist();
 		Playlist playlist2 = new Playlist();
 		
-		Song song1 = new Song("song1", "artist1", 10);
-		Song song2 = new Song("song2", "artist2", 10);
-		Song song3 = new Song("song3", "artist1", 10);
-		Song song4 = new Song("song2", "artist2", 10);
-		Song song5 = new Song("song3", "artist1", 20);
+		Song song1 = new Song("Light My Fire", "The Doors", 10);
+		Song song2 = new Song("Black Dog", "Led Zeppelin", 10);
+		Song song3 = new Song("Hey Jude", "The Beetles", 10);
+		Song song4 = new Song("Black Dog", "Led Zeppelin", 10);
+		Song song5 = new Song("Hey Jude", "The Beetles", 20);
 		
 		
 		
@@ -29,6 +29,7 @@ public class Sorter {
 		
 		playlist1.clear();
 		playlist2.clear();
+		System.out.println("------------------------------------------------");
 		System.out.println("\n");
 		
 		
@@ -48,6 +49,7 @@ public class Sorter {
 		
 		playlist1.clear();
 		playlist2.clear();
+		System.out.println("------------------------------------------------");
 		System.out.println("\n");
 		
 		
@@ -68,6 +70,7 @@ public class Sorter {
 		
 		playlist1.clear();
 		playlist2.clear();
+		System.out.println("------------------------------------------------");
 		System.out.println("\n");
 
 		
@@ -85,6 +88,7 @@ public class Sorter {
 		
 		playlist1.clear();
 		playlist2.clear();
+		System.out.println("------------------------------------------------");
 		System.out.println("\n");
 
 		
@@ -110,6 +114,7 @@ public class Sorter {
 		
 		playlist1.clear();
 		playlist2.clear();
+		System.out.println("------------------------------------------------");
 		System.out.println("\n");
 	}
 	

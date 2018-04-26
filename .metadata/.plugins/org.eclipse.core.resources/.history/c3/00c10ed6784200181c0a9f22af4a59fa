@@ -1,0 +1,77 @@
+
+import com.neovisionaries.i18n.CountryCode;
+import com.wrapper.spotify.SpotifyApi;
+import com.wrapper.spotify.exceptions.SpotifyWebApiException;
+import com.wrapper.spotify.model_objects.credentials.ClientCredentials;
+import com.wrapper.spotify.model_objects.specification.Paging;
+import com.wrapper.spotify.model_objects.specification.TrackSimplified;
+import com.wrapper.spotify.requests.authorization.client_credentials.ClientCredentialsRequest;
+import com.wrapper.spotify.requests.data.albums.GetAlbumsTracksRequest;
+
+import java.io.IOException;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+
+public class Spotify {
+	private static final String clientId = "abeef9600bad45989e961fcaa940fce4";
+	private static final String clientSecret = "43c5fefb4d704fc3a4afeb6bae77355a";
+	public String accessToken = "";
+
+	private static final SpotifyApi spotifyApi = new SpotifyApi.Builder()
+			.setClientId(clientId)
+			.setClientSecret(clientSecret).build();
+	private static final ClientCredentialsRequest clientCredentialsRequest = spotifyApi.clientCredentials().build();
+
+	public static void clientCredentials_Sync() {
+		try {
+			final ClientCredentials clientCredentials = clientCredentialsRequest.execute();
+
+			// Set access token for further "spotifyApi" object usage
+			spotifyApi.setAccessToken(clientCredentials.getAccessToken());
+
+			System.out.println("Expires in: " + clientCredentials.getExpiresIn());
+		} catch (IOException | SpotifyWebApiException e) {
+			System.out.println("Error: " + e.getMessage());
+		}
+	}
+
+	public static void clientCredentials_Async() {
+		try {
+			final Future<ClientCredentials> clientCredentialsFuture = clientCredentialsRequest.executeAsync();
+
+			// ...
+
+			final ClientCredentials clientCredentials = clientCredentialsFuture.get();
+
+			// Set access token for further "spotifyApi" object usage
+			spotifyApi.setAccessToken(clientCredentials.getAccessToken());
+
+			System.out.println("Expires in: " + clientCredentials.getExpiresIn());
+		} catch (InterruptedException | ExecutionException e) {
+			System.out.println("Error: " + e.getCause().getMessage());
+		}
+	}
+
+	private static final GetAlbumsTracksRequest getAlbumsTracksRequest = new SpotifyApi.Builder()
+			.setAccessToken(accessToken)
+			.build()
+			.getAlbumsTracks("5zYAJJIjkfyMIQIP6x9qbc").limit(10).offset(0).market(CountryCode.SE).build();
+
+	public static void getAlbumsTracks_Sync() {
+		try {
+			final Paging<TrackSimplified> trackSimplifiedPaging = getAlbumsTracksRequest.execute();
+
+			System.out.println("Total: " + trackSimplifiedPaging.getTotal());
+		} catch (IOException | SpotifyWebApiException e) {
+			System.out.println("Error: " + e.getMessage());
+		}
+	}
+
+	public static void main(String[] args) {
+		Spotify spot = new Spotify();
+		spot.clientCredentials_Sync();
+		spot.getAlbumsTracks_Sync();
+		System.out.println(spotifyApi.getAccessToken());
+	}
+
+}
