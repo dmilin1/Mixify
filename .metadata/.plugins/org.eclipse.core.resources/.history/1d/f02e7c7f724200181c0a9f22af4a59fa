@@ -1,7 +1,0 @@
-import com.wrapper.spotify.SpotifyApi;
-
-public class Spotify {
-	public static void main(String[] args) {
-		SpotifyApi spotifyApi = new SpotifyApi.Builder()
-	}
-}
