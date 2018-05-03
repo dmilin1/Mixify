@@ -1,0 +1,27 @@
+{
+  "name": "mixify",
+  "version": "1.0.0",
+  "description": "A simple Spotify playlist mixer",
+  "main": "app.js",
+  "dependencies": {
+    "cookie-parser": "^1.4.3",
+    "express": "^4.16.3",
+    "querystring": "^0.2.0",
+    "request": "^2.85.0",
+    "surge": "^0.20.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "deploy": "surge -p public -d mixify.surge.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dmilin1/Mixify.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dmilin1/Mixify/issues"
+  },
+  "homepage": "https://github.com/dmilin1/Mixify#readme"
+}
